@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../firebaseConfig';
 import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import InputField from './InputField';
 import LoginButton from './LoginButton';
@@ -14,6 +15,7 @@ const SignUpForm = ({ onSignUp, onSwitchToLogin }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -34,6 +36,7 @@ const SignUpForm = ({ onSignUp, onSwitchToLogin }) => {
             setError(null); // Clear any previous errors
             setSuccess("Account created successfully!");
             onSignUp(email, password);
+            navigate('/profile');  // Redirigir al perfil después de registrarse
         } catch (error) {
             setError(`Firebase: ${error.message}`);
         }
