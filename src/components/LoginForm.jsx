@@ -1,15 +1,13 @@
+// src/components/LoginForm.jsx
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Logo from './Logo';
 import InputField from './InputField';
 import LoginButton from './LoginButton';
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ onLogin, onSwitchToSignUp }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    // Título del formulario de login
-    const title = "Sign in to your account";
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -17,11 +15,12 @@ const LoginForm = ({ onLogin }) => {
     };
 
     return (
-        <div className="w-full max-w-md bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow dark:border dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <Logo />
+                {/*Aca se cambia la informacion del logo*/}
+                <Logo src="https://media.tenor.com/BIn4gjem0LQAAAAj/naruto-hungry.gif" alt="Company Name" />
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
-                    {title}
+                    Sign in to your account
                 </h1>
                 <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
                     <InputField
@@ -49,7 +48,7 @@ const LoginForm = ({ onLogin }) => {
                     </div>
                     <LoginButton label="Sign in" onClick={handleLogin} />
                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                        Don’t have an account yet? <a href="#" onClick={onSwitchToSignUp} className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                     </p>
                 </form>
             </div>
@@ -59,6 +58,7 @@ const LoginForm = ({ onLogin }) => {
 
 LoginForm.propTypes = {
     onLogin: PropTypes.func.isRequired,
+    onSwitchToSignUp: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

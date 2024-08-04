@@ -1,13 +1,15 @@
-// src/components/Home.jsx
 import React, { useState } from 'react';
 import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 
 const Home = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isSignUp, setIsSignUp] = useState(false);
 
     const toggleLoginForm = () => {
         setShowLogin(!showLogin);
+        setIsSignUp(false);
     };
 
     const toggleDarkMode = () => {
@@ -15,13 +17,21 @@ const Home = () => {
         setIsDarkMode(!isDarkMode);
     };
 
+    const switchToSignUp = () => {
+        setIsSignUp(true);
+    };
+
+    const switchToLogin = () => {
+        setIsSignUp(false);
+    };
+
     return (
-        <div className="relative min-h-screen flex flex-col items-center justify-centervbg-cover bg-center transition-colors duration-500" style={{ backgroundImage: 'url()' }}>
+        <div className="relative min-h-screen flex flex-col items-center justify-center  bg-cover bg-center transition-colors duration-500" style={{ backgroundImage: 'url()' }}>
             <button
                 onClick={toggleLoginForm}
                 className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 fixed top-4 right-4 z-20"
             >
-                {showLogin ? 'Hide Login Form' : 'Show Login Form'}
+                {showLogin ? 'Close' : 'Sign In'}
             </button>
             <button
                 onClick={toggleDarkMode}
@@ -32,11 +42,15 @@ const Home = () => {
             <h1 className="text-4xl font-bold mb-8 text-center z-20 text-gray-900 dark:text-white">Welcome to Our Site</h1>
             <div className={`relative z-20 w-full flex justify-center transition-opacity duration-500 ${showLogin ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                 {showLogin && (
-                    <LoginForm
-                        onLogin={(email, password) => {
+                    isSignUp ? (
+                        <SignUpForm onSignUp={(email, password) => {
+                            console.log('Sign up attempt with:', email, password);
+                        }} onSwitchToLogin={switchToLogin} />
+                    ) : (
+                        <LoginForm onLogin={(email, password) => {
                             console.log('Login attempt with:', email, password);
-                        }}
-                    />
+                        }} onSwitchToSignUp={switchToSignUp} />
+                    )
                 )}
             </div>
         </div>
