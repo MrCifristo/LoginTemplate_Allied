@@ -10,7 +10,7 @@ const App = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-            <LoginForm title="BrokersBloc" logoSrc="https://media.tenor.com/BIn4gjem0LQAAAAj/naruto-hungry.gif" onLogin={handleLogin} />
+            <LoginForm title="Company Name" logoSrc="https://media.tenor.com/BIn4gjem0LQAAAAj/naruto-hungry.gif" onLogin={handleLogin} />
         </div>
     );
 };
