@@ -1,4 +1,3 @@
-// src/components/Logo.jsx
 import PropTypes from 'prop-types';
 
 const Logo = () => {
