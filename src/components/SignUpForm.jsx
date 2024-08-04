@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../firebaseConfig';
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import firebaseErrors from '../firebaseErrors';
 import Logo from './Logo';
 import InputField from './InputField';
 import LoginButton from './LoginButton';
@@ -38,7 +39,7 @@ const SignUpForm = ({ onSignUp, onSwitchToLogin }) => {
             onSignUp(email, password);
             navigate('/profile');  // Redirigir al perfil después de registrarse
         } catch (error) {
-            setError(`Firebase: ${error.message}`);
+            setError(firebaseErrors[error.code] || error.message);
         }
     };
 
