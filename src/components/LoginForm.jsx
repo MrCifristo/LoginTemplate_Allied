@@ -1,6 +1,9 @@
 // src/components/LoginForm.jsx
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../firebaseConfig';
+import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import InputField from './InputField';
 import LoginButton from './LoginButton';
@@ -8,20 +11,30 @@ import LoginButton from './LoginButton';
 const LoginForm = ({ onLogin, onSwitchToSignUp }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        onLogin(email, password);
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            setError(null);
+            onLogin(email, password);
+            navigate('/profile');  // Redirigir al perfil después de iniciar sesión
+        } catch (error) {
+            setError(error.message);
+        }
     };
 
     return (
         <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow dark:border dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                {/*Aca se cambia la informacion del logo*/}
+                {/*Aca se cambia la informacion de la empresa*/}
                 <Logo src="https://media.tenor.com/BIn4gjem0LQAAAAj/naruto-hungry.gif" alt="Company Name" />
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                     Sign in to your account
                 </h1>
+                {error && <p className="text-red-500 text-center">{error}</p>}
                 <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
                     <InputField
                         type="email"

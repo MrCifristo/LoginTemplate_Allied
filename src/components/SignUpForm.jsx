@@ -1,6 +1,9 @@
 // src/components/SignUpForm.jsx
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from '../firebaseConfig';
+import { doc, setDoc } from "firebase/firestore";
 import Logo from './Logo';
 import InputField from './InputField';
 import LoginButton from './LoginButton';
@@ -9,24 +12,42 @@ const SignUpForm = ({ onSignUp, onSwitchToLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            alert("Passwords do not match!");
+            setError("Passwords do not match!");
             return;
         }
-        onSignUp(email, password);
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Guardar información adicional del usuario en Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                email: user.email,
+                createdAt: new Date().toISOString()
+            });
+
+            setError(null); // Clear any previous errors
+            setSuccess("Account created successfully!");
+            onSignUp(email, password);
+        } catch (error) {
+            setError(`Firebase: ${error.message}`);
+        }
     };
 
     return (
         <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow dark:border dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                {/*Aca se cambia la informacion del logo*/}
                 <Logo src="https://media.tenor.com/BIn4gjem0LQAAAAj/naruto-hungry.gif" alt="Company Name" />
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                     Create an account
                 </h1>
+                {error && <p className="text-red-500 text-center">{error}</p>}
+                {success && <p className="text-green-500 text-center">{success}</p>}
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSignUp}>
                     <InputField
                         type="email"
