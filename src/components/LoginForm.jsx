@@ -5,9 +5,12 @@ import Logo from './Logo';
 import InputField from './InputField';
 import LoginButton from './LoginButton';
 
-const LoginForm = ({ title, logoSrc, onLogin }) => {
+const LoginForm = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    // Título del formulario de login
+    const title = "Sign in to your account";
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -17,9 +20,9 @@ const LoginForm = ({ title, logoSrc, onLogin }) => {
     return (
         <div className="w-full max-w-md bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <Logo src={logoSrc} alt={title} />
+                <Logo />
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
-                    Sign in to your account
+                    {title}
                 </h1>
                 <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
                     <InputField
@@ -56,8 +59,6 @@ const LoginForm = ({ title, logoSrc, onLogin }) => {
 };
 
 LoginForm.propTypes = {
-    title: PropTypes.string.isRequired,
-    logoSrc: PropTypes.string.isRequired,
     onLogin: PropTypes.func.isRequired,
 };
 

@@ -10,30 +10,23 @@ const Home = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 relative">
-            <h1 className="text-4xl font-bold mb-8 text-center">Welcome to Our Site</h1>
-            <img
-                src="https://external-preview.redd.it/OEgDJQxhyaWWV37Bxmn2jCCQMkuebzvjy6_3YcPiWGU.jpg?auto=webp&s=e9879ff3a85942bc35e4f152621f3bd95cc46ea7"
-                alt="Placeholder"
-                className="w-32 h-32 mb-8"
-            />
+        <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100 bg-cover bg-center w-4/5 h-3/4" style={{ backgroundImage: 'url(https://images.pexels.com/photos/25033277/pexels-photo-25033277/free-photo-of-sharr-dog-sitting-in-park-with-trees.jpeg?auto=compress&cs=tinysrgb&w=800)' }}>
             <button
                 onClick={toggleLoginForm}
-                className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 fixed top-4 right-4"
+                className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 fixed top-4 right-4 z-20"
             >
-                {showLogin ? 'Close' : 'Sign in'}
+                {showLogin ? 'Hide Login Form' : 'Show Login Form'}
             </button>
-            {showLogin && (
-                <div className="w-full flex justify-center mt-8">
+            <h1 className="text-4xl font-bold text-white absolute top-0 text-center z-20">Welcome to Your Home</h1>
+            <div className={`relative z-20 w-full flex justify-center transition-opacity duration-500 ${showLogin ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                {showLogin && (
                     <LoginForm
-                        title="Flowbite"
-                        logoSrc="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
                         onLogin={(email, password) => {
                             console.log('Login attempt with:', email, password);
                         }}
                     />
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };
