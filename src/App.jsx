@@ -1,12 +1,23 @@
 // src/App.jsx
-import React from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
+import UserProfile from './components/UserProfile';
 
 const App = () => {
+    const [user, setUser] = useState(null);
+
+    const handleLogin = (userData) => {
+        setUser(userData);  // Guardar la información del usuario al hacer login
+    };
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-            <Home />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home onLogin={handleLogin} />} />
+                <Route path="/profile" element={<UserProfile user={user} />} />
+            </Routes>
+        </Router>
     );
 };
 
