@@ -47,9 +47,9 @@ const LoginForm = ({ onLogin, onSwitchToSignUp }) => {
                         <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                     </div>
                     <LoginButton label="Sign in" onClick={handleLogin} />
-                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Don’t have an account yet? <a href="#" onClick={onSwitchToSignUp} className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
-                    </p>
+                    {/*<p className="text-sm font-light text-gray-500 dark:text-gray-400">*/}
+                    {/*    Don’t have an account yet? <a href="#" onClick={onSwitchToSignUp} className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>*/}
+                    {/*</p>*/}
                 </form>
             </div>
         </div>
